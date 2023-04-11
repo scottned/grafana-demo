@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Grafana Demo</title>
+    <style>
+      #root {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+      #app {
+        display: grid;
+        place-items: center;
+        width: 800px;
+        height: 90vh;
+        background: #f3f3f3;
+      }
+    </style>
+
+    <!-- TODO: Fix Faro setup; CORS errors -- is localhost allowed?
+    <script>
+      (function () {
+        const script = document.createElement('script');
+    
+        script.onload = () => {
+          window.GrafanaFaroWebSdk.initializeFaro({
+            url: 'https://faro-collector-prod-us-central-0.grafana.net/collect/{app-key}',
+            app: {
+              name: 'grafana-demo',
+              version: '1.0.0',
+              environment: 'production'
+            }
+          });
+        };
+        script.src = 'https://unpkg.com/@grafana/faro-web-sdk@1.0.2/dist/bundle/faro-web-sdk.iife.js';
+
+        document.head.appendChild(script);
+      })();
+    </script>
+    -->
+
+    <!-- This app is just for demo/testing purposes.  Don't load Babel like this in production. -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.14.0/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.14.0/umd/react-dom.production.min.js"></script>    
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+
+      function Demo() {
+        const [msg, setMsg] = React.useState()
+
+      async function sayHello() {
+        fetch('/hello')
+          .then(res => res.json())
+          .then(json => setMsg(`${json.msg} at ${json.when}`))
+      }
+
+        return <>
+          <h1>Grafana Demo</h1>
+          <div>
+            <button onClick={sayHello}>Say hello to the server</button>
+          </div>
+          <p>{msg}&nbsp;</p>
+        </>
+      }
+
+      function App() {
+        return (
+          <div id="app">
+            <Demo/>
+          </div>
+        )
+      }
+
+      ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+  </body>
+</html>
